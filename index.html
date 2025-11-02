@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operation Free DexScreener</title>
-    <link rel="icon" type="image/x-icon" href="clyde.png">
-
+    <title>Bagdrop</title>
     <style>
         * {
             margin: 0;
@@ -14,626 +12,560 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
             min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #000000;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            border-radius: 8px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            color: #000000;
-            padding: 20px;
-        }
-
-        .container {
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.02em;
-            color: #000000;
-        }
-
-        .subtitle {
+            font-weight: bold;
             font-size: 1.2rem;
-            color: #666666;
-            margin-bottom: 3rem;
-            font-weight: 400;
         }
 
-        .circle-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 3rem;
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
         }
 
-        .circle {
+        .search-bar input {
             width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #ffffff;
+            padding: 0.6rem 1rem;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .search-bar input::placeholder {
+            color: #666;
+        }
+
+        .nav-buttons {
             display: flex;
+            gap: 1rem;
             align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 0 0 8px #000000,
-                0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #00cc66;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #2a2a2a;
+        }
+
+        .btn-secondary:hover {
+            background: #1a1a1a;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .circle::before {
+        .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
-            animation: pulse 3s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+            pointer-events: none;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
-        .fee-amount {
+        .hero h1 {
             font-size: 3.5rem;
             font-weight: 700;
-            color: #000000;
-            z-index: 1;
-            position: relative;
-            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            color: #ffffff;
         }
 
-        .fee-amount.updating {
-            transform: scale(1.05);
+        .hero p {
+            color: #999;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
-        .update-indicator {
+        /* Index Section */
+        .index-section {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tables-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .table-section {
+            min-width: 0;
+        }
+
+        .index-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #0a0a0a;
+        }
+
+        thead {
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            color: #666;
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #1a1a1a;
+            color: #ffffff;
             font-size: 0.9rem;
-            color: #666666;
-            margin-top: 1rem;
+        }
+
+        tbody tr {
+            transition: background-color 0.2s ease, opacity 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #151515;
+        }
+
+        tbody tr.new-entry {
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wallet-hash {
+            font-family: 'Courier New', monospace;
+            color: #00ff88;
+            font-size: 0.85rem;
+        }
+
+        .holders-count {
+            color: #ffffff;
             font-weight: 500;
         }
 
-        .top-buttons {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 12px;
-            z-index: 1000;
-        }
-
-        .x-button, .docs-button {
-            background: #000000;
-            border: 2px solid #000000;
-            border-radius: 8px;
-            padding: 12px 24px;
+        .amount {
             color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
         }
 
-        .x-button:hover, .docs-button:hover {
-            background: #333333;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .date {
+            color: #999;
         }
 
-        .x-button svg, .docs-button svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .docs-modal {
+        /* Modal */
+        .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
         }
 
-        .docs-modal.active {
-            display: flex;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .docs-content {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 3rem;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 2px solid #000000;
+        .modal-content {
+            background-color: #0a0a0a;
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
             position: relative;
         }
 
-        .close-docs {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
+        .close {
+            color: #999;
+            float: right;
             font-size: 2rem;
+            font-weight: bold;
             cursor: pointer;
-            color: #000000;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease;
+            line-height: 1;
         }
 
-        .close-docs:hover {
-            transform: scale(1.1);
+        .close:hover {
+            color: #fff;
         }
 
-        .docs-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #000000;
-            font-weight: 700;
+        .modal h2 {
+            color: #00ff88;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
         }
 
-        .docs-content h3 {
-            font-size: 1.5rem;
-            margin-top: 2rem;
+        .modal p {
+            color: #ccc;
+            line-height: 1.8;
             margin-bottom: 1rem;
-            color: #000000;
-            font-weight: 700;
+            font-size: 1rem;
         }
 
-        .docs-content p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: #333333;
+        .modal ul {
+            color: #ccc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .docs-content ul {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        .docs-content li {
-            font-size: 1.05rem;
-            line-height: 1.8;
+        .modal li {
             margin-bottom: 0.5rem;
-            color: #333333;
         }
 
-        .docs-content strong {
-            color: #000000;
-            font-weight: 700;
-        }
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
 
-        .docs-highlight {
-            background: #f8f8f8;
-            border-left: 4px solid #000000;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 4px;
-        }
+            table {
+                font-size: 0.85rem;
+            }
 
-        .table-container {
-            overflow-x: auto;
-            border: 2px solid #000000;
-            border-radius: 8px;
-        }
-
-        .coins-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #ffffff;
-        }
-
-        .coins-table thead {
-            background: #000000;
-            color: #ffffff;
-        }
-
-        .coins-table th {
-            padding: 1rem;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1rem;
-            border-bottom: 2px solid #000000;
-        }
-
-        .coins-table td {
-            padding: 1rem;
-            text-align: left;
-            font-size: 1rem;
-            border-bottom: 1px solid #e5e5e5;
-            color: #333333;
-        }
-
-        .coins-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .coins-table tbody tr:hover:not(.empty-row) {
-            background: #f8f8f8;
-        }
-
-        .empty-row td {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #666666;
-            font-style: italic;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: #000000;
-            color: #ffffff;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .info-section {
-            background: #f8f8f8;
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-top: 2rem;
-            border: 2px solid #000000;
-        }
-
-        .info-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #000000;
-            font-weight: 700;
-        }
-
-        .info-section p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: #333333;
-            text-align: left;
-        }
-
-        .info-section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .highlight {
-            background: #000000;
-            color: #ffffff;
-            padding: 0.2em 0.5em;
-            border-radius: 4px;
-            font-weight: 600;
+            .tables-wrapper {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            .header {
+                flex-wrap: wrap;
             }
 
-            .subtitle {
-                font-size: 1rem;
+            .search-bar {
+                order: 3;
+                width: 100%;
+                margin: 1rem 0 0 0;
             }
 
-            .circle-container {
-                width: 220px;
-                height: 220px;
-            }
-
-            .fee-amount {
-                font-size: 2.5rem;
-            }
-
-            .info-section {
-                padding: 1.5rem;
-            }
-
-            .top-buttons {
-                top: 15px;
-                right: 15px;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .x-button, .docs-button {
-                padding: 10px 18px;
-                font-size: 0.9rem;
-            }
-
-            .x-button svg, .docs-button svg {
-                width: 18px;
-                height: 18px;
-            }
-
-            .docs-content {
-                padding: 2rem;
-            }
-
-            .docs-content h2 {
+            .hero h1 {
                 font-size: 2rem;
             }
 
-            .docs-content h3 {
-                font-size: 1.3rem;
+            .nav-buttons {
+                gap: 0.5rem;
             }
 
-            .coins-table th,
-            .coins-table td {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.9rem;
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
             }
 
-            .coins-table th:first-child,
-            .coins-table td:first-child {
-                padding-left: 1rem;
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .modal h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="top-buttons">
-        <button class="docs-button" id="docsButton">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            Docs
-        </button>
-        <a href="https://x.com/PumpPoolSolana" target="_blank" rel="noopener noreferrer" class="x-button">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-            </svg>
-            Follow Us
-        </a>
-    </div>
-
-    <div class="docs-modal" id="docsModal">
-        <div class="docs-content">
-            <button class="close-docs" id="closeDocs">&times;</button>
-            <h2>Documentation</h2>
-            <p style="color: #666666; margin-bottom: 2rem;">Understanding Operation Free DexScreener</p>
-
-            <h3>The Problem</h3>
-            <p>
-                Traditionally, getting your token listed on DexScreener requires a manual payment. This creates an immediate financial barrier for new projects and developers. Many promising tokens never get the visibility they deserve simply because they can't afford the upfront listing fee. This system favors those with capital over those with innovation.
-            </p>
-
-            <h3>Our Solution</h3>
-            <p>
-                Operation Free DexScreener eliminates this barrier entirely. We've built an automated system that uses platform fees to pay for DexScreener listings on every bonded coin. When your token bonds on our platform, it automatically gets listed on DexScreener without any action or payment required from you.
-            </p>
-
-            <div class="docs-highlight">
-                <strong>Key Point:</strong> Every bonded coin gets free DexScreener listing automatically. No manual payments. No applications. No waiting.
-            </div>
-
-            <h3>How The Technical Process Works</h3>
-            <p>
-                Our platform operates on a simple but powerful fee structure. When transactions occur on the platform, a small fee is collected. Instead of these fees going solely to buybacks or development, we've allocated a portion specifically for DexScreener payments.
-            </p>
-            
-            <p>
-                Here's the step-by-step process:
-            </p>
-            <ul>
-                <li><strong>Fee Collection:</strong> Platform fees are collected automatically from transactions in real-time</li>
-                <li><strong>Pool Accumulation:</strong> These fees accumulate in a dedicated pool visible on our homepage</li>
-                <li><strong>Bonding Trigger:</strong> When a token reaches bonding status on our platform, it triggers our automated listing system</li>
-                <li><strong>Automatic Payment:</strong> Our system immediately allocates the required amount from the fee pool to cover the DexScreener listing cost</li>
-                <li><strong>Instant Listing:</strong> The token gets listed on DexScreener without any manual intervention</li>
-            </ul>
-
-            <h3>Benefits For The Community</h3>
-            <p>
-                This approach creates a level playing field where success is determined by community support and project quality rather than upfront capital. New developers can launch tokens knowing they'll get professional visibility from day one. Holders benefit because their tokens automatically gain credibility and discoverability through DexScreener listings.
-            </p>
-
-            <p>
-                The system is completely transparent. The fee counter you see on our homepage shows the real-time accumulation of the pool that funds these listings. Every token that bonds benefits equally from this community resource.
-            </p>
-
-            <h3>Sustainability</h3>
-            <p>
-                The model is designed to be self-sustaining. As platform activity increases, the fee pool grows proportionally. This ensures that we can continue offering free DexScreener listings indefinitely without compromising the service quality or availability. The more the platform grows, the stronger this benefit becomes for the entire community.
-            </p>
-
-            <div class="docs-highlight">
-                <strong>Result:</strong> A completely automated, sustainable system that democratizes access to professional token visibility for every project on our platform.
-            </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">₿</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search by transaction or wallet">
         </div>
-    </div>
-
-    <div class="container">
-        <h1>Operation Free DexScreener</h1>
-        <p class="subtitle">Making DexScreener free for every bonded coin</p>
-        
-        <div class="circle-container">
-            <div class="circle">
-                <div class="fee-amount" id="feeAmount">$0</div>
-            </div>
+        <div class="nav-buttons">
+            <button class="btn btn-secondary" id="howItWorksBtn">how it works</button>
+            <a href="https://x.com/bags_drop" target="_blank" class="btn btn-secondary">𝕏</a>
         </div>
-        
-        <div class="update-indicator" id="updateIndicator">
-            Updates every 5 seconds
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bagdrop</h1>
+            <p>Using bags fees airdrop fees</p>
         </div>
+    </section>
 
-        <div class="info-section">
-            <h2>How It Works</h2>
-            <p>
-                We automatically use platform fees to pay for <span class="highlight">DexScreener listings</span> on every bonded coin. This means free visibility for everyone — no manual payments, no barriers to entry. Your token gets listed automatically when it bonds, giving it the exposure it deserves from day one.
-            </p>
-
-            <p>
-                Platform fees are automatically allocated to cover DexScreener costs for every bonded coin. No action is required from developers or holders — the system handles everything seamlessly in the background.
-            </p>
-
-            <p>
-                Every bonded token gets instant DexScreener listing without manual payment, giving equal opportunity for market exposure and discovery. This removes the traditional barrier where only projects with upfront capital could afford professional listing services.
-            </p>
-
-            <p>
-                By removing the DexScreener payment barrier, we create a level playing field where every project has the same professional visibility from launch. This community-first approach ensures that good projects aren't held back by financial constraints, but can compete based on their merits and community support.
-            </p>
-        </div>
-
-        <div class="info-section" style="margin-top: 2rem;">
-            <h2>DexScreener Paid Coins</h2>
-            <p style="margin-bottom: 2rem;">
-                Track all coins that have received automatic DexScreener listings through our platform.
-            </p>
-            
+    <!-- Tables Section -->
+    <div class="tables-wrapper">
+        <!-- Transactions Section -->
+        <div class="table-section">
+            <h2 class="index-title">Live Transactions</h2>
             <div class="table-container">
-                <table class="coins-table">
+                <table>
                     <thead>
                         <tr>
-                            <th>Token Name</th>
-                            <th>Symbol</th>
-                            <th>Date Listed</th>
-                            <th>Status</th>
+                            <th>TRANSACTION</th>
+                            <th>AMOUNT</th>
+                            <th>TIME</th>
                         </tr>
                     </thead>
-                    <tbody id="coinsTableBody">
-                        <tr class="empty-row">
-                            <td colspan="4">No coins listed yet. Be the first to bond and get free DexScreener listing!</td>
+                    <tbody id="transactionsTable">
+                        <!-- Transactions will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Holders Section -->
+        <div class="table-section">
+            <h2 class="index-title">Top Holders</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>WALLET</th>
+                            <th>HOLDINGS</th>
+                            <th>PERCENTAGE</th>
                         </tr>
+                    </thead>
+                    <tbody id="holdersTable">
+                        <!-- Holders will be added dynamically -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <script>
-        const STORAGE_KEY = 'operation_dexscreener_fee_amount';
-        let currentFee = 0.00;
-        const feeElement = document.getElementById('feeAmount');
-        const updateIndicator = document.getElementById('updateIndicator');
-        const docsModal = document.getElementById('docsModal');
-        const docsButton = document.getElementById('docsButton');
-        const closeDocs = document.getElementById('closeDocs');
-
-        // Docs modal functionality
-        docsButton.addEventListener('click', () => {
-            docsModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeDocs.addEventListener('click', () => {
-            docsModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        docsModal.addEventListener('click', (e) => {
-            if (e.target === docsModal) {
-                docsModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Load saved fee from localStorage
-        function loadSavedFee() {
-            const savedFee = localStorage.getItem(STORAGE_KEY);
-            if (savedFee !== null) {
-                currentFee = parseFloat(savedFee);
-            }
-        }
-
-        // Save fee to localStorage
-        function saveFee() {
-            localStorage.setItem(STORAGE_KEY, currentFee.toString());
-        }
-
-        function formatCurrency(amount) {
-            return `$${amount.toFixed(2)}`;
-        }
-
-        function generateRandomIncrement() {
-            // Generate a random increment between $0.01 and $0.99
-            return (Math.random() * 0.98 + 0.01);
-        }
-
-        function updateFee() {
-            // Add animation class
-            feeElement.classList.add('updating');
+    <!-- How It Works Modal -->
+    <div id="howItWorksModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>How Bagdrop Works</h2>
+            <p>Bagdrop is a revolutionary platform that redistributes transaction fees back to token holders through airdrops.</p>
             
-            // Update the fee after a brief moment
-            setTimeout(() => {
-                const increment = generateRandomIncrement();
-                currentFee += increment;
-                feeElement.textContent = formatCurrency(currentFee);
-                
-                // Save to localStorage
-                saveFee();
-                
-                // Remove animation class
-                setTimeout(() => {
-                    feeElement.classList.remove('updating');
-                }, 300);
-            }, 150);
+            <p><strong>Here's how it works:</strong></p>
+            <ul>
+                <li><strong>Transaction Fees:</strong> Every transaction on the Bagdrop network generates a small fee</li>
+                <li><strong>Fee Collection:</strong> These fees are collected into a community pool</li>
+                <li><strong>Regular Airdrops:</strong> Fees are automatically distributed to all BAG token holders proportionally</li>
+                <li><strong>Real-time Updates:</strong> Watch live transactions and holder rankings update in real-time</li>
+            </ul>
+            
+            <p>The more BAG tokens you hold, the larger your share of the airdrop fees. It's a sustainable way to reward long-term holders and active community members.</p>
+        </div>
+    </div>
 
-            // Update the indicator
-            updateIndicator.textContent = 'Just updated • Next update in 5s';
-            setTimeout(() => {
-                updateIndicator.textContent = 'Updates every 5 seconds';
-            }, 2000);
+    <script>
+        // Generate random Solana wallet address
+        function generateWallet() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
+            let wallet = '';
+            for (let i = 0; i < 44; i++) {
+                wallet += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return wallet;
         }
 
-        // Load saved fee on page load
-        loadSavedFee();
+        // Generate random amount
+        function generateAmount() {
+            return Math.floor(Math.random() * 5000) + 100;
+        }
 
-        // Set initial display
-        feeElement.textContent = formatCurrency(currentFee);
+        // Get current time
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
 
-        // First update after 5 seconds
-        setTimeout(() => {
-            updateFee();
-            // Then continue updating every 5 seconds
-            setInterval(updateFee, 5000);
-        }, 5000);
-
-        // Countdown display (optional enhancement)
-        let countdown = 5;
-        setInterval(() => {
-            countdown--;
-            if (countdown <= 0) {
-                countdown = 5;
+        // Add new transaction
+        function addTransaction() {
+            const tbody = document.getElementById('transactionsTable');
+            const wallet = generateWallet();
+            const shortWallet = wallet.substring(0, 8) + '...' + wallet.substring(wallet.length - 8);
+            const amount = generateAmount();
+            const time = getCurrentTime();
+            
+            const row = document.createElement('tr');
+            row.className = 'new-entry';
+            row.innerHTML = `
+                <td class="wallet-hash">${shortWallet}</td>
+                <td class="amount">${amount.toLocaleString()} BAG</td>
+                <td class="date">${time}</td>
+            `;
+            
+            tbody.insertBefore(row, tbody.firstChild);
+            
+            // Keep only last 15 transactions
+            while (tbody.children.length > 15) {
+                tbody.removeChild(tbody.lastChild);
             }
-        }, 1000);
+        }
+
+        // Initialize transactions
+        function initTransactions() {
+            for (let i = 0; i < 10; i++) {
+                addTransaction();
+            }
+        }
+
+        // Holders array to track current holders
+        let holders = [];
+        const totalSupply = 10000000;
+
+        // Add new holder
+        function addHolder() {
+            const wallet = generateWallet();
+            const shortWallet = wallet.substring(0, 8) + '...' + wallet.substring(wallet.length - 8);
+            const holdings = Math.floor(Math.random() * 500000) + 10000;
+            const percentage = ((holdings / totalSupply) * 100).toFixed(2);
+            
+            holders.push({ wallet: shortWallet, holdings, percentage });
+            
+            // Sort by holdings
+            holders.sort((a, b) => b.holdings - a.holdings);
+            
+            // Keep only top 20 holders
+            if (holders.length > 20) {
+                holders = holders.slice(0, 20);
+            }
+            
+            updateHoldersTable();
+        }
+
+        // Update holders table display
+        function updateHoldersTable() {
+            const tbody = document.getElementById('holdersTable');
+            tbody.innerHTML = '';
+            
+            holders.forEach((holder, index) => {
+                const row = document.createElement('tr');
+                row.className = 'new-entry';
+                row.innerHTML = `
+                    <td class="holders-count">#${index + 1}</td>
+                    <td class="wallet-hash">${holder.wallet}</td>
+                    <td class="amount">${holder.holdings.toLocaleString()} BAG</td>
+                    <td class="date">${holder.percentage}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('howItWorksModal');
+        const btn = document.getElementById('howItWorksBtn');
+        const span = document.getElementsByClassName('close')[0];
+
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        initTransactions();
+        // Holders start at 0
+        
+        // Add new transaction every 3 seconds
+        setInterval(addTransaction, 3000);
+        
+        // Add new holder every 5 seconds until we reach 20
+        setInterval(() => {
+            if (holders.length < 20) {
+                addHolder();
+            } else {
+                // After 20 holders, occasionally add new ones (which will replace bottom ones)
+                if (Math.random() > 0.7) {
+                    addHolder();
+                }
+            }
+        }, 5000);
     </script>
 </body>
 </html>
