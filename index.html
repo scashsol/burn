@@ -3,507 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meme Index</title>
+    <title>Shielded Coin</title>
+    <link rel="icon" type="image/x-icon" href="cz.png">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #FFD700;
-            color: #2d2d2d;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 20px 30px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .nav-btn {
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #e0e0e0;
-            border-radius: 25px;
-            text-decoration: none;
-            color: #FFD700;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-        }
-
-        .nav-btn:hover {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #fff;
-            color: #FFC700;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: #333;
+            line-height: 1.6;
         }
-
-        .x-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            padding: 0;
-        }
-
-        /* First page - Hero section */
+        
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 4rem;
-            font-weight: 300;
-            letter-spacing: -2px;
-            color: #2d2d2d;
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.2s forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #2d2d2d;
-            font-weight: 300;
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.8s forwards;
-        }
-
-        .scroll-prompt {
-            font-size: 1rem;
-            color: rgba(45, 45, 45, 0.8);
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out 1.5s forwards;
-            position: absolute;
-            bottom: 50px;
-        }
-
-        .scroll-arrow {
-            margin-top: 10px;
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
-        }
-
-        /* Content sections */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .main-content {
-            padding: 80px 0;
-        }
-
-        .section {
-            margin-bottom: 80px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .section.fade-in {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 40px;
-            color: #2d2d2d;
+            padding: 60px 40px;
             text-align: center;
         }
-
-        .section p {
-            font-size: 1.2rem;
-            color: #2d2d2d;
+        
+        .hero-logo {
+            width: 150px;
+            height: 150px;
             margin: 0 auto 30px;
-            text-align: center;
-            font-weight: 300;
-            max-width: 800px;
-            line-height: 1.8;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
+        
+        .hero-logo img {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            object-fit: cover;
         }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 50px;
-            border-radius: 15px;
-            max-width: 700px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 2rem;
-            font-weight: 300;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: #000;
-        }
-
-        .modal h2 {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 30px;
-            color: #FFD700;
-        }
-
-        .modal h3 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-top: 30px;
+        
+        .hero h1 {
+            font-size: 48px;
             margin-bottom: 15px;
-            color: #FFD700;
         }
-
-        .modal p {
-            font-size: 1.1rem;
-            color: #333;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            font-weight: 300;
+        
+        .hero p {
+            font-size: 20px;
             color: #666;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
-
-        .empty-state p {
-            font-size: 1rem;
-            color: #999;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.3);
-            padding: 50px;
-            border-radius: 12px;
-            margin: 50px 0;
-            border-left: 4px solid #2d2d2d;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin: 60px 0;
-        }
-
-        .step {
-            padding: 40px 30px;
-            border: 1px solid rgba(45, 45, 45, 0.3);
-            border-radius: 12px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #fff;
-            color: #FFD700;
-            border-radius: 50%;
-            line-height: 50px;
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 35px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 16px;
             font-weight: 500;
-            font-size: 1.2rem;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .two-column-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+        
+        .section-content {
+            padding: 30px;
+        }
+        
+        .section-content h2 {
+            font-size: 36px;
             margin-bottom: 25px;
+            color: #2c3e50;
         }
-
-        .step h3 {
-            font-size: 1.4rem;
+        
+        .section-content p {
+            color: #555;
             margin-bottom: 20px;
-            font-weight: 400;
-            color: #2d2d2d;
+            font-size: 17px;
+            line-height: 1.8;
         }
-
-        .step p {
-            font-size: 1rem;
-            color: #2d2d2d;
-            line-height: 1.6;
+        
+        .section-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        .section-image:hover {
+            transform: scale(1.02);
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .section-image img {
+            width: 100%;
+            display: block;
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+        
+        /* Alternate layout for visual interest */
+        .reverse {
+            direction: rtl;
         }
+        
+        .reverse > * {
+            direction: ltr;
+        }
+        
 
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .nav {
-                padding: 15px 20px;
-            }
-            
-            .nav-btn {
-                padding: 8px 15px;
-                font-size: 0.8rem;
-            }
-            
-            .x-btn {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .logo {
-                font-size: 3rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .section h2 {
-                font-size: 2rem;
-            }
-            
-            .section p {
-                font-size: 1.1rem;
-            }
-            
-            .steps {
+
+        @media (max-width: 1024px) {
+            .two-column-section {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
             
-            .highlight-box {
-                padding: 30px 20px;
+            .reverse {
+                direction: ltr;
             }
+            
+            .section-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .content-wrapper {
+                padding: 40px 20px;
+            }
+            
+            .section-content h2 {
+                font-size: 28px;
+            }
+            
+            .section-content p {
+                font-size: 16px;
+            }
+
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <a href="#" class="nav-btn" onclick="openModal('purchases'); return false;">Purchases</a>
-        <a href="#" class="nav-btn" onclick="openModal('whitepaper'); return false;">Whitepaper</a>
-        <a href="https://x.com/memes_indexs" class="nav-btn x-btn" target="_blank">𝕏</a>
-    </nav>
-
-    <!-- Purchases Modal -->
-    <div id="purchases-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('purchases')">&times;</span>
-            <h2>IP Purchases</h2>
-            <div class="empty-state">
-                <div class="empty-state-icon">📦</div>
-                <h3>No Purchases Yet</h3>
-                <p>We haven't acquired any meme intellectual property rights yet. Check back soon as we begin building our portfolio.</p>
+    <div class="hero">
+        <div class="hero-logo">
+            <img src="logos.png" alt="Shielded Coin Logo">
+        </div>
+        
+        <h1>Shielded Coin</h1>
+        <p>Toly's meme of zcash since 2013</p>
+        
+        <a href="https://x.com/aeyakovenko" class="social-btn" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+            </svg>
+        </a>
+    </div>
+    
+    <div class="content-wrapper">
+        <!-- First Section: Text Left, Image Right -->
+        <div class="two-column-section">
+            <div class="section-content">
+                <h2>The Origin</h2>
+                <p>In the wild world of Solana Twitter, where Toly and Mert exchange their legendary banter, a new meme was born that would become an instant classic.</p>
+                <p>The "Shielded Coin" joke emerged from Toly's playful trolling of Mert Mumtaz, the CEO of Helius and vocal Zcash supporter, poking fun at the irony of Zcash's privacy features.</p>
+                <p>While Zcash claims to offer "shielded" transactions for ultimate privacy, Toly turned this on its head—suggesting the coin itself has no protection against exploits, making it the perfect setup for crypto's favorite inside joke.</p>
+            </div>
+            <div class="section-image">
+                <img src="tt1.png" alt="The Beginning">
+            </div>
+        </div>
+        
+        <!-- Second Section: Image Left, Text Right -->
+        <div class="two-column-section reverse">
+            <div class="section-content">
+                <h2>What is the Shielded Coin Meme?</h2>
+                <p>The "Shielded Coin" meme is Toly's brilliant wordplay that captures the absurdity of cryptocurrency marketing versus reality.</p>
+                <p>Zcash uses "shielded pools" for privacy—but Toly jokes that while your transactions might be shielded, the protocol itself apparently isn't shielded from much of anything.</p>
+                <p>It's become Toly's go-to way to troll Mert whenever Zcash comes up in conversation, creating one of the most entertaining ongoing bits in crypto Twitter history. The Zcash community has embraced it too, turning the joke into a badge of honor.</p>
+            </div>
+            <div class="section-image">
+                <img src="tt2.png" alt="The Evolution">
             </div>
         </div>
     </div>
 
-    <!-- Whitepaper Modal -->
-    <div id="whitepaper-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('whitepaper')">&times;</span>
-            <h2>Meme Index Whitepaper</h2>
-            
-            <h3>Executive Summary</h3>
-            <p>Meme Index establishes a legal monopoly over viral meme intellectual property in the cryptocurrency space. By strategically acquiring IP rights to memes before they explode in popularity, we create a self-reinforcing revenue system where platform fees fund additional acquisitions.</p>
-            
-            <h3>The Problem</h3>
-            <p>The memecoin space generates billions in trading volume, yet meme creators and IP holders capture virtually none of this value. Platforms like PumpFun profit from hosting tokens based on viral memes, while original intellectual property remains unmonetized and unprotected.</p>
-            
-            <h3>Our Solution</h3>
-            <p>Meme Index systematically acquires legal rights to meme brands, names, logos, and associated digital assets. Through legal enforcement, we compel platforms to either freeze unauthorized tokens or redirect their trading fees directly to us.</p>
-            
-            <h3>Revenue Model</h3>
-            <p>When platforms host memecoins using our IP, we have two enforcement options: complete token freezing or fee redirection. Fee redirection creates a continuous revenue stream that funds the acquisition of additional meme properties, building an expanding monopoly.</p>
-            
-            <h3>Market Strategy</h3>
-            <p>We monitor emerging meme trends across social platforms, acquiring IP rights proactively before viral explosion. Our legal team enforces rights across all major memecoin platforms, creating systematic coverage of the entire ecosystem.</p>
-            
-            <h3>The Flywheel Effect</h3>
-            <p>Each successful enforcement generates fees that fund more IP acquisitions. More IP holdings increase our market coverage. Greater coverage generates more fees. This self-reinforcing cycle creates inevitable market dominance in the memecoin IP space.</p>
-            
-            <h3>Legal Framework</h3>
-            <p>Our acquisitions focus on trademark registrations, copyright assignments, and domain ownership. These established IP protections give us clear legal standing to enforce rights against unauthorized commercial use by cryptocurrency platforms.</p>
+    <div class="content-wrapper">
+        <!-- Third Section: Text Left, Image Right -->
+        <div class="two-column-section">
+            <div class="section-content">
+                <h2>Why This Matters</h2>
+                <p>We're witnessing peak crypto culture where the Solana co-founder and one of the ecosystem's biggest builders can publicly roast each other's favorite projects while maintaining genuine respect.</p>
+                <p>The "Shielded Coin" meme proves that in 2025, the best crypto communities don't take themselves too seriously—even when discussing privacy tech and security models.</p>
+                <p>This isn't just about Zcash—it's about how the Solana community has mastered the art of high-level technical debate mixed with absolutely unhinged meme warfare. Toly's legendary trolling game keeps everyone on their toes.</p>
+            </div>
+            <div class="section-image">
+                <img src="tt3.png" alt="Join the Community">
+            </div>
         </div>
     </div>
-
-    <!-- First Page - Hero Section -->
-    <section class="hero">
-        <h1 class="logo">Meme Index</h1>
-        <p class="hero-subtitle">We Use Fees To Legally Buy IP Rights To Memes</p>
-        <div class="scroll-prompt">
-            Scroll down to learn more
-            <div class="scroll-arrow">↓</div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            
-            <section class="section" data-section="1">
-                <h2>Our Approach</h2>
-                <p>Inspired by BlackRock's systematic dominance, Meme Index creates a legal monopoly on meme brands and assets. We force platforms like PumpFun to redirect fees from any memecoin using our intellectual property.</p>
-            </section>
-
-            <section class="section" data-section="2">
-                <div class="highlight-box">
-                    <h2>Controlling the Trenches</h2>
-                    <p>Through strategic brand ownership, we legally force platforms like PumpFun to freeze unauthorized memecoins or redirect their fees directly to us. Our monopoly ensures every viral meme becomes our revenue stream.</p>
-                </div>
-            </section>
-
-            <section class="section" data-section="3">
-                <h2>How We Dominate the Memecoin Space</h2>
-                <p>We legally acquire ownership of viral meme names, logos, and associated digital assets before they explode. Our team tracks PumpFun and similar platforms for any memecoin launches using our protected intellectual property.</p>
-                <p>Through legal enforcement, we force platforms to freeze unauthorized tokens or redirect trading fees to Meme Index. Every successful memecoin using our brands generates revenue for us, creating an unstoppable monopoly that funds the acquisition of even more meme properties.</p>
-            </section>
-
-            <section class="section" data-section="4">
-                <h2>Total Market Control</h2>
-                <p>When platforms like PumpFun host memecoins using our fee-purchased IP rights, legal enforcement gives us two options: freeze the token entirely or redirect all trading fees to Meme Index.</p>
-                <p>This self-reinforcing cycle—using fees to buy more meme IP rights—creates systematic control of the entire memecoin ecosystem. Every viral trend becomes our revenue stream, funding the acquisition of even more meme properties.</p>
-            </section>
-
-        </div>
-    </main>
-
-    <script>
-        // Modal functions
-        function openModal(modalName) {
-            document.getElementById(modalName + '-modal').classList.add('active');
-        }
-
-        function closeModal(modalName) {
-            document.getElementById(modalName + '-modal').classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
-
-        // Scroll-triggered animations
-        const sections = document.querySelectorAll('.section');
-        
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const sectionNum = entry.target.dataset.section;
-                    const delay = (sectionNum - 1) * 200; // 200ms delay between sections
-                    
-                    setTimeout(() => {
-                        entry.target.classList.add('fade-in');
-                    }, delay);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    </script>
 </body>
 </html>
